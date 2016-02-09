@@ -1,6 +1,7 @@
-package fr.shortpath.api;
+package fr.shortpath.frontal.api;
 
 import java.util.List;
+import java.util.Optional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -22,6 +23,10 @@ public class ProducerResource {
         this.service = service;
     }
 
+    // TODO sl4j
+    // TODO bean validation
+    // TODO orika ?
+
     @GET
     @Produces("application/json")
     public List<Producer> getAllProducers() { // TODO paginated
@@ -32,6 +37,11 @@ public class ProducerResource {
     @Path("/{login}")
     @Produces("application/json")
     public Producer getProducerByLogin(@PathParam("login") String login) {
-        return null;
+        Optional<Producer> byLogin = service.findByLogin(login);         // TODO map to external object
+        if (byLogin.isPresent()) {
+            return byLogin.get();
+        } else {
+            return null;
+        }
     }
 }

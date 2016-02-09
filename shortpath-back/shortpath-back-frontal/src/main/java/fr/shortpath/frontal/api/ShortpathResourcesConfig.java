@@ -1,4 +1,4 @@
-package fr.shortpath.api;
+package fr.shortpath.frontal.api;
 
 import javax.ws.rs.ApplicationPath;
 
