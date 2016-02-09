@@ -18,7 +18,7 @@ public class ProducerService {
 
     public Optional<Producer> findByLogin(String login) {
         if (Strings.isNullOrEmpty(login)) {
-            return Optional.ofNullable(repository.findOne(login));
+            return Optional.ofNullable(repository.findByLogin(login));
         } else {
             return Optional.empty();
         }
