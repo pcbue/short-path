@@ -39,16 +39,6 @@
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj-version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy-all-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-expressions</artifactId>
-                <version>${lucene-expressions-version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

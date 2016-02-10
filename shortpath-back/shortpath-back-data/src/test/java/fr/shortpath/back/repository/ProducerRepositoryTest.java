@@ -2,6 +2,7 @@ package fr.shortpath.back.repository;
 
 import fr.shortpath.back.SpringContext;
 import fr.shortpath.back.data.Producer;
+import org.assertj.core.api.Assertions;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.node.NodeBuilder;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class ProducerRepositoryTest {
             return new ElasticsearchTemplate(
                 NodeBuilder.nodeBuilder().local(true).settings(
                     ImmutableSettings.settingsBuilder()
-                        .put("path.data", "target/es-data")
+                        .put("path.data", "target/es-data") // TODO parameterized
                         .put("http.enabled", false)
                 ).node().client()
             );
@@ -62,7 +63,7 @@ public class ProducerRepositoryTest {
 
         repository.index(p);
 
-        repository.findByLogin("zobzob");
+        Assertions.assertThat(repository.findByLogin("zobzob")).isNotNull();
 
         // TODO
     }

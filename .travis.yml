@@ -12,3 +12,6 @@ install:
   - mvn -v
 
 script: mvn -B -T 2 clean install
+
+after_success:
+  - mvn clean test jacoco:report coveralls:report
