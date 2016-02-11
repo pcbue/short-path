@@ -14,6 +14,8 @@ public class ProducerService {
         this.repository = repository;
     }
 
+    // TODO suggest results
+
     public Optional<Producer> findByLogin(String login) {
         if (Strings.isNullOrEmpty(login)) {
             return Optional.ofNullable(repository.findByLogin(login));
