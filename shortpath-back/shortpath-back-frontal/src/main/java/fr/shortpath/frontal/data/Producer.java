@@ -8,4 +8,6 @@ public class Producer {
 
     @JsonProperty(value = "login", required = true)
     public String login;
+
+    // TODO link to other rest resources
 }

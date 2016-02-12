@@ -4,10 +4,12 @@ import fr.shortpath.back.ElasticsearchClientContext;
 import fr.shortpath.back.SpringContext;
 import fr.shortpath.back.data.Producer;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,8 +37,8 @@ public class ProducerRepositoryTest {
         elasticsearchTemplate.refresh(Producer.class, true);
     }
 
-    private void index(Producer producer) {
-        repository.index(producer);
+    private void index(Producer... producer) {
+        repository.save(Lists.newArrayList(producer));
     }
 
     private Producer producer(String login) {
@@ -65,5 +67,29 @@ public class ProducerRepositoryTest {
             repository.findByLogin("zibzib")
         )
             .isNull();
+    }
+
+    @Test
+    public void findAllTakeCareOfPage() throws Exception {
+        index(producer("zobzob"), producer("zibzib"));
+
+        Assertions.assertThat(
+            repository.findAll(new PageRequest(0, 3))
+        )
+            .hasSize(2)
+            .extracting("login")
+            .containsOnly("zobzob", "zibzib");
+    }
+
+    @Test
+    public void findAllTakeCareOfPageWithSize() throws Exception {
+        index(producer("zobzob"), producer("zibzib"));
+
+        Assertions.assertThat(
+            repository.findAll(new PageRequest(1, 1))
+        )
+            .hasSize(1)
+            .extracting("login")
+            .containsOnly("zibzib");
     }
 }
