@@ -1,16 +1,19 @@
 package fr.shortpath.back.repository;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import fr.shortpath.back.ElasticsearchClientContext;
 import fr.shortpath.back.SpringContext;
 import fr.shortpath.back.data.Producer;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -37,8 +40,16 @@ public class ProducerRepositoryTest {
         elasticsearchTemplate.refresh(Producer.class, true);
     }
 
-    private void index(Producer... producer) {
-        repository.save(Lists.newArrayList(producer));
+    private void index(Producer... producers) {
+        elasticsearchTemplate.bulkIndex(
+            Arrays.stream(producers).map(
+                producer -> new IndexQueryBuilder()
+                    .withId(producer.getLogin())
+                    .withObject(producer)
+                    .build()
+            ).collect(Collectors.toList())
+        );
+        elasticsearchTemplate.refresh(Producer.class, true);
     }
 
     private Producer producer(String login) {

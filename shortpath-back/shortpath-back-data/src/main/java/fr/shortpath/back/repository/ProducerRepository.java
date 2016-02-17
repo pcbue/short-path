@@ -8,4 +8,6 @@ public interface ProducerRepository extends ElasticsearchRepository<Producer, St
 
     @Query("{\"bool\" : {\"must\" : [{\"match\" : {\"login\" : \"?0\"}}]}}")
     Producer findByLogin(String login);
+
+    // TODO find by nearest denomination
 }
