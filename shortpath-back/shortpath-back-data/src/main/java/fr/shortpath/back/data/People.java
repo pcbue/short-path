@@ -1,6 +1,6 @@
 package fr.shortpath.back.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -20,7 +20,7 @@ public abstract class People {
     private String email;
 
     @Field(type = FieldType.Date, format = DateFormat.basic_date_time_no_millis)
-    private Date created; // TODO jodaTime ?
+    private LocalDateTime created;
 
     public String getLogin() {
         return login;
@@ -46,11 +46,11 @@ public abstract class People {
         this.email = email;
     }
 
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 }

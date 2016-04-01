@@ -15,3 +15,4 @@ script: mvn -B -T 2 clean install
 
 after_success:
   - mvn clean test jacoco:report coveralls:report
+  - mvn versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates | grep 'INFO' | grep '>' | sort | uniq
