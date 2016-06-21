@@ -15,8 +15,5 @@ script: mvn -B -T 2 clean install
 
 after_success:
   - mvn clean test jacoco:report coveralls:report
-  - curl https://www.jpm4j.org/install/script | sh
-  - jpm install com.codacy:codacy-coverage-reporter:assembly
-  - export CODACY_PROJECT_TOKEN=e583bcfe2e9642b4afc8addd00ed1ae1
-  - codacy-coverage-reporter -l Java -r coverage.xml
+  - ./codacy.sh
   - mvn versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates | grep 'INFO' | grep '>' | sort | uniq
